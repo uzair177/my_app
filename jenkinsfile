@@ -4,9 +4,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    sh 'docker compose build'
-                }
+		dir('/var/jenkins_home/workspace/my_app/app') {
+        	        script {
+                	    sh 'docker compose build'
+                }}
             }
         }
 
