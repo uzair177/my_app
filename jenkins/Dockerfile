@@ -16,8 +16,10 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
-# Add Jenkins user to the Docker group
-RUN usermod -aG docker jenkins
+# Add Docker group with the same GID as the host
+# Add Docker group only if it doesn't already exist
+RUN getent group docker || groupadd -g 984 docker && usermod -aG docker jenkins
+
 
 # Switch back to the Jenkins user
 USER jenkins
