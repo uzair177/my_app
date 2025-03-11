@@ -26,11 +26,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - db
-    user: root  # Run as root to install Docker Compose
-    command: >
-      bash -c "apt update && apt install -y docker-compose-plugin &&
-      chown -R jenkins:jenkins /var/jenkins_home &&
-      /usr/local/bin/jenkins.sh"
+
 volumes:
   mysql-data:
   jenkins-data:
