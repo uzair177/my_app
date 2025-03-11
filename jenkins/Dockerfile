@@ -1,7 +1,7 @@
 FROM jenkins/jenkins:lts
 USER root
 
-# Install Docker CLI (optional, if Jenkins needs to run Docker commands)
+# Install Docker CLI
 RUN apt-get update && \
     apt-get install -y \
         ca-certificates \
@@ -14,7 +14,10 @@ RUN apt-get update && \
       "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
       $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
     apt-get update && \
-    apt-get install -y docker-ce docker-ce-cli containerd.io
+    apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# Add Jenkins user to the Docker group
+RUN usermod -aG docker jenkins
 
 # Switch back to the Jenkins user
 USER jenkins
